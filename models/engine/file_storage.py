@@ -16,16 +16,22 @@ class FileStorage:
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
-        self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
+        key = obj.__class__.__name__ + '.' + obj.id
+        self.all().update({key: obj})
+        #self.all().update({obj.to_dict()['__class__'] + '.' + obj.id: obj})
 
     def save(self):
         """Saves storage dictionary to file"""
         with open(FileStorage.__file_path, 'w') as f:
+            temp = {k: v.to_dict() for k, v in FileStorage.__objects.items()}
+            json.dump(temp, f)
+            """
             temp = {}
             temp.update(FileStorage.__objects)
             for key, val in temp.items():
                 temp[key] = val.to_dict()
             json.dump(temp, f)
+            """
 
     def reload(self):
         """Loads storage dictionary from file"""
@@ -43,7 +49,7 @@ class FileStorage:
                     'Review': Review
                   }
         try:
-            temp = {}
+            #temp = {}
             with open(FileStorage.__file_path, 'r') as f:
                 temp = json.load(f)
                 for key, val in temp.items():
