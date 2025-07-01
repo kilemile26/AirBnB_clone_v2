@@ -123,14 +123,14 @@ class HBNBCommand(cmd.Cmd):
             print("** class name missing  **")
             return
 
-        new_inst = HBNHCommand.classes[args[0]]()
+        new_inst = HBNBCommand.classes[args[0]]()
 
         #extracting parameters from the command
         kwargs = {}
         for arg in args[1:]:
             param = arg.split('=')
-            if len(p) == 2:
-                p_name, p_value = p[0], p[1]
+            if len(param) == 2:
+                p_name, p_value = param[0], param[1]
                 # Replace underscores with spaces in the parameter name
                 p_name = p_name.replace('_', ' ')
                 # Handling quotes in the parameter value
